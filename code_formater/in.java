@@ -1,6 +1,6 @@
 while (inputStream.hasNext()) {
    char symbol = inputStream.read();
-   if (symbol == ‘ ‘) {
+   if (symbol == ' ' ) {
        whiteSpaceCount++;
    }
 }
