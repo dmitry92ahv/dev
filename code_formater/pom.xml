@@ -33,7 +33,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.ahvatkin.app.formatter.App</mainClass>
+                            <mainClass>com.ahvatkin.app</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -2,80 +2,78 @@ package com.ahvatkin.app;
 
 public class Formatter implements IFormatter{
     @Override
-    public void Formatter(IReader reader, IWriter writer) {
+    public void Format(IReader reader, IWriter writer) throws FormatterException {
 
         int level = 0;
-        Boolean flagKovich = false;
-        char pred = ' ';
+        String s1;
+        String tab = "    ";
 
         try {
             while (reader.hacChars()){
                 char s = reader.read();
 
-
-
-
-                if((s == '\'' || s == '\"') && !flagKovich) {
-                    flagKovich = true;
+                if (s == ' ' || s == '\n'){
+                    continue;
                 }
-                if((s == '\'' || s == '\"') && flagKovich) {
-                    flagKovich = false;
-                }
+                else if (s == ';') {
+                    s1 = "";
 
-
-
-
-
-
-
-                if(s == '\n');
-                else if (s == ' '){
-                 if(flagKovich) writer.write(" ");
-                }
-
-                else if (s == '+' || s == '-' || s == '*' || s == '/' || s == '=') writer.write((" " + s + " "));
-
-
-
-                else if(s == ';') {
-                    String a = "";
-                    a = a + ";\n";
+                    writer.write(';');
+                    writer.write('\n');
                     for (int i = 0; i < level; i++) {
-                        a = a + "    ";
+
+                        writer.write(' ');
+                        writer.write(' ');
+                        writer.write(' ');
+                        writer.write(' ');
                     }
-                    writer.write(a);
+
                 }
-                else if(s == '{') {
-                    String a = "";
-                    a = a + "{\n";
-                    for (int i = 0; i < level; i++) {
-                        a = a + "    ";
-                    }
-                    writer.write(a);
+                else if (s == '{') {
+                    s1 = "";
                     level++;
-                }
-                else if(s == '}') {
-                    String a = "";
-                    if(pred == ';') level--;
-                    level--;
-                    for (int i = 0; i < level; i++) {
-                        a = a + "    ";
-                    }
-                    a = a + "}\n";
-                    writer.write(a);
 
+                    writer.write('{');
+                    writer.write('\n');
+                    for (int i = 0; i < level; i++) {
+                        writer.write(' ');
+                        writer.write(' ');
+                        writer.write(' ');
+                        writer.write(' ');
+                    }
+                }
+                else if (s == '}') {
+                    s1 = "";
+                    level--;
+
+                    writer.write('}');
+                    writer.write('\n');
+                    for (int i = 0; i < level; i++) {
+
+                    writer.write(' ');
+                    writer.write(' ');
+                    writer.write(' ');
+                    writer.write(' ');
+                    }
                 }
                 else {
-                    String s1;
-                    s1 = "" + s;
-                    writer.write(s1);
+
+
+                    writer.write(s);
                 }
 
 
-                pred = s;
+
+
+
+
+
+
             }
         } catch (ReaderException e) {
-            e.printStackTrace();
+            throw new FormatterException("Reading error", e);
+        } catch (WriterException e) {
+            throw new FormatterException("Writing error", e);
         }
     }
 }

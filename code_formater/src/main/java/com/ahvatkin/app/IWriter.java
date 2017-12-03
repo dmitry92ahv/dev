@@ -10,6 +10,7 @@ public interface IWriter {
 //    void close() throws WriteException, IOException;
 
 //    void write(char symbol) throws WriteException;
-    void write(String text);
+//    void write(String text) ;
+    void write(final char symbol) throws WriterException;
 
 }
