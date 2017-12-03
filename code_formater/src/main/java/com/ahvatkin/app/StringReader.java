@@ -1,24 +1,29 @@
 package com.ahvatkin.app;
 
-public class StringReader implements IReader{
 
-    Boolean nehtChar = true;
-    int i = 0;
-    String s = "asfd;{dgfjh;}  \n dhjhgsf{gfdhgfjhg;}";
 
-    @Override
-    public boolean hacChars() throws ReaderException {
-        if (i == s.length() -1)
-        return false;
-        else return true;
+    public class StringReader implements IReader {
+
+        private String value;
+        private int index;
+
+        public StringReader(final String value) {
+
+            this.value = value;
+        }
+
+        @Override
+        public boolean readNext() throws ReaderException {
+            return index < value.length();
+        }
+
+        @Override
+        public char getChar() throws ReaderException {
+
+            try {
+                return value.charAt(index++);
+            } catch (StringIndexOutOfBoundsException e) {
+                throw new ReaderException("Attempting to read outside of the string", e);
+            }
+        }
     }
-
-    @Override
-    public char read() throws ReaderException {
-        i++;
-
-        return s.charAt(i);
-
-    }
-
-}
